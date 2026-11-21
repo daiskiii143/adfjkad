@@ -1,44 +1,32 @@
 /**
- * Quick Vibe Check ✨ - Prank Web Application
- * Progressive Shrinking Mechanic + Zero Buffering Jumpscare
+ * Quick Vibe Check ✨ - Bespoke Editorial Edition
+ * Tactile stationery canvas + progressive shrinking psychological mechanic
  */
 
 (function () {
   'use strict';
 
-  // --- Configuration & Questions ---
+  // --- Questions (Editorial Playfair Typography with natural italic accents) ---
   const questions = [
     {
       step: 1,
-      title: "Hey! Quick question... how was your day today? ☀️",
-      hint: "Be honest, no wrong answers!",
-      placeholder: "Type your thoughts here...",
-      btnText: "Next",
-      stepClass: "step-1",
-      progress: "33.3%",
-      stepIndicator: "Question 1 of 3"
+      html: "Hey. Quick question — how was your <em>day</em> today?",
+      placeholder: "write here...",
+      stepClass: "step-1"
     },
     {
       step: 2,
-      title: "Nice. What's one random thing that made you smile recently?",
-      hint: "Even the tiniest little thing counts...",
-      placeholder: "A memory, a meme, anything...",
-      btnText: "Next",
-      stepClass: "step-2",
-      progress: "66.6%",
-      stepIndicator: "Question 2 of 3"
+      html: "Nice. What is one random thing that made you <em>smile</em> recently?",
+      placeholder: "a memory, a thought...",
+      stepClass: "step-2"
     },
     {
       step: 3,
-      // The progressive shrinking mechanic: 9px font size & faint color
-      // Forces the user to physically lean closer to the screen to read!
-      title: "Wait, lean in a bit closer... tell me a tiny secret nobody knows:",
-      hint: "(whisper it here, promise it stays between us...)",
-      placeholder: "whisper your secret here...",
-      btnText: "Finish & See Vibe Score ✨",
-      stepClass: "step-3",
-      progress: "100%",
-      stepIndicator: "Question 3 of 3"
+      // Progressive shrinking trap: 9px font size & faint ink
+      // Compels the user to physically lean right up to the screen!
+      html: "Wait, lean in a bit closer... tell me a tiny <em>secret</em> nobody knows:",
+      placeholder: "whisper it here...",
+      stepClass: "step-3"
     }
   ];
 
@@ -47,15 +35,11 @@
   let teaseTimeout = null;
 
   // --- DOM Elements ---
-  const quizCard = document.getElementById('quizCard');
+  const quizStage = document.getElementById('quizStage');
   const quizForm = document.getElementById('quizForm');
   const questionLabel = document.getElementById('questionLabel');
-  const questionHint = document.getElementById('questionHint');
   const answerInput = document.getElementById('answerInput');
-  const nextBtn = document.getElementById('nextBtn');
-  const btnText = document.getElementById('btnText');
-  const progressBar = document.getElementById('progressBar');
-  const stepIndicator = document.getElementById('stepIndicator');
+  const submitBtn = document.getElementById('submitBtn');
 
   const scareContainer = document.getElementById('scareContainer');
   const scareVideo = document.getElementById('scareVideo');
@@ -66,7 +50,7 @@
   const shareBtn = document.getElementById('shareBtn');
   const toast = document.getElementById('toast');
 
-  // Check URL param for explicit source override: ?source=youtube vs ?source=local (default: local)
+  // Query parameter support: ?source=youtube vs local scare.mp4
   const urlParams = new URLSearchParams(window.location.search);
   const preferYouTube = urlParams.get('source') === 'youtube';
 
@@ -95,73 +79,50 @@
         events: {
           onReady: function (event) {
             ytReady = true;
-            // Pre-seek and buffer muted in background
             try {
               event.target.mute();
               event.target.seekTo(8.2, true);
-            } catch (err) {
-              console.warn("YouTube preload buffer notice:", err);
-            }
+            } catch (err) {}
           }
         }
       });
-    } catch (e) {
-      console.warn("YouTube API init:", e);
-    }
+    } catch (e) {}
   };
 
-  // Preload & warm local video immediately
+  // Pre-warm local video immediately
   if (scareVideo) {
     scareVideo.load();
   }
 
-  // --- Step Rendering Function ---
+  // --- Render Question Step ---
   function renderStep(index) {
     const q = questions[index];
     if (!q) return;
 
-    // Smooth transition
+    // Gentle fade transition
     questionLabel.style.opacity = '0';
-    questionHint.style.opacity = '0';
 
     setTimeout(() => {
-      // Update text
-      questionLabel.textContent = q.title;
-      questionHint.textContent = q.hint;
-      answerInput.placeholder = q.placeholder;
-      btnText.textContent = q.btnText;
-      progressBar.style.width = q.progress;
-      stepIndicator.textContent = q.stepIndicator;
-
-      // Update progressive shrinking classes
+      questionLabel.innerHTML = q.html;
       questionLabel.className = `question-text ${q.stepClass}`;
-      questionHint.className = `question-hint ${q.stepClass}`;
-
-      // Clear input and focus
+      answerInput.placeholder = q.placeholder;
       answerInput.value = '';
       answerInput.focus();
-
-      // Fade in
       questionLabel.style.opacity = '1';
-      questionHint.style.opacity = '1';
-    }, 150);
+    }, 120);
 
-    // Warm video buffers during step changes
+    // Warm video buffers during step progression
     if (scareVideo) {
-      try {
-        scareVideo.load();
-      } catch (e) {}
+      try { scareVideo.load(); } catch (e) {}
     }
     if (ytReady && ytPlayer) {
-      try {
-        ytPlayer.seekTo(8.2, true);
-      } catch (e) {}
+      try { ytPlayer.seekTo(8.2, true); } catch (e) {}
     }
   }
 
-  // --- Advance or Trigger Jumpscare ---
+  // --- Form & Input Navigation ---
   function handleNext() {
-    // If the input is empty on Q1 or Q2, provide a gentle visual nudge
+    // If empty on Q1 or Q2, gentle nudge
     if (currentStep < 2 && !answerInput.value.trim()) {
       answerInput.classList.add('shake-screen');
       setTimeout(() => answerInput.classList.remove('shake-screen'), 400);
@@ -173,18 +134,16 @@
       currentStep++;
       renderStep(currentStep);
     } else {
-      // Step 3 submitted -> TRIGGER JUMPSCARE IMMEDIATELY
+      // Step 3 submitted -> JUMPSCARE TRIGGER
       triggerJumpscare();
     }
   }
 
-  // Form submit (handles Enter key & button click)
   quizForm.addEventListener('submit', function (e) {
     e.preventDefault();
     handleNext();
   });
 
-  // Enter key handling on input
   answerInput.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -192,48 +151,42 @@
     }
   });
 
-  // --- JUMPSCARE LAUNCH (Zero Latency Execution) ---
+  // --- JUMPSCARE LAUNCH (Instant zero-latency trigger) ---
   function triggerJumpscare() {
     if (jumpscareTriggered) return;
     jumpscareTriggered = true;
 
-    // 1. Immediately hide quiz card with 0ms transition
-    quizCard.style.display = 'none';
+    // 1. Immediately hide quiz stage (0ms delay)
+    quizStage.style.display = 'none';
 
-    // 2. Show fullscreen scare container
+    // 2. Activate full screen scare overlay
     scareContainer.classList.add('active');
     document.body.classList.add('shake-screen');
 
-    // 3. Screen flash strobe effect
+    // 3. Strobe flash
     screenFlash.classList.add('flash-anim');
 
-    // 4. Trigger mobile haptic vibration
+    // 4. Mobile haptic vibration
     if ('vibrate' in navigator) {
       try {
-        // High intensity pulsing vibration pattern
         navigator.vibrate([100, 50, 200, 50, 400, 50, 500]);
-      } catch (err) {
-        console.warn("Vibration error:", err);
-      }
+      } catch (e) {}
     }
 
-    // 5. Request fullscreen if allowed (user interaction callstack)
+    // 5. Fullscreen request (within user gesture context)
     try {
-      const docEl = document.documentElement;
-      if (docEl.requestFullscreen) {
-        docEl.requestFullscreen().catch(() => {});
-      } else if (docEl.webkitRequestFullscreen) {
-        docEl.webkitRequestFullscreen();
+      const el = document.documentElement;
+      if (el.requestFullscreen) {
+        el.requestFullscreen().catch(() => {});
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
       }
-    } catch (err) {
-      // Fullscreen policy restriction fallback
-    }
+    } catch (e) {}
 
-    // 6. Play the jumpscare video with zero buffering delay
+    // 6. Audio/Video Playback
     const useYT = preferYouTube && ytReady && ytPlayer;
 
     if (useYT) {
-      // YouTube Player branch
       ytPlayerContainer.classList.remove('hidden');
       scareVideo.classList.add('hidden');
       try {
@@ -241,16 +194,14 @@
         ytPlayer.setVolume(100);
         ytPlayer.seekTo(8.2, true);
         ytPlayer.playVideo();
-      } catch (e) {
-        console.error("YouTube play error, falling back to local video:", e);
+      } catch (err) {
         playLocalVideo();
       }
     } else {
-      // Local MP4 branch (Zero buffering delay, instant sound)
       playLocalVideo();
     }
 
-    // 7. Post-Scare Tease at 3.3 seconds (11.5s mark of the scene)
+    // 7. Post-Scare Tease at 3.3s (scene ending)
     teaseTimeout = setTimeout(() => {
       endJumpscareAndShowTease(useYT);
     }, 3300);
@@ -264,9 +215,7 @@
 
     const playPromise = scareVideo.play();
     if (playPromise !== undefined) {
-      playPromise.catch((err) => {
-        console.warn("Autoplay blocked or local video error:", err);
-        // If sound blocked, retry with muted fallback or user tap
+      playPromise.catch(() => {
         scareVideo.muted = true;
         scareVideo.play();
       });
@@ -275,41 +224,32 @@
 
   // --- Post-Scare Tease: "Darr gayi na? 😛" ---
   function endJumpscareAndShowTease(usedYT) {
-    // Pause video
     if (usedYT && ytPlayer) {
-      try {
-        ytPlayer.pauseVideo();
-      } catch (e) {}
+      try { ytPlayer.pauseVideo(); } catch (e) {}
     } else if (scareVideo) {
       scareVideo.pause();
     }
 
-    // Remove screen shake
     document.body.classList.remove('shake-screen');
 
-    // Reveal floating tease pill
     teaseOverlay.classList.remove('hidden');
-    // Allow slight frame delay for CSS transition
     requestAnimationFrame(() => {
       teaseOverlay.classList.add('visible');
     });
   }
 
-  // --- Replay Button: Reset Quiz State ---
+  // --- Replay Reset ---
   replayBtn.addEventListener('click', function () {
     if (teaseTimeout) clearTimeout(teaseTimeout);
 
-    // Reset flags & state
     jumpscareTriggered = false;
     currentStep = 0;
 
-    // Reset tease overlay
     teaseOverlay.classList.remove('visible');
     setTimeout(() => {
       teaseOverlay.classList.add('hidden');
     }, 300);
 
-    // Reset video & container
     scareContainer.classList.remove('active');
     screenFlash.classList.remove('flash-anim');
     document.body.classList.remove('shake-screen');
@@ -329,7 +269,6 @@
       }
     }
 
-    // Exit fullscreen if active
     if (document.fullscreenElement || document.webkitFullscreenElement) {
       try {
         if (document.exitFullscreen) {
@@ -340,16 +279,15 @@
       } catch (e) {}
     }
 
-    // Bring back quiz card
-    quizCard.style.display = 'block';
+    quizStage.style.display = 'block';
     renderStep(0);
   });
 
-  // --- Share Button: Copy link to clipboard / Web Share API ---
+  // --- Share Prank Link ---
   shareBtn.addEventListener('click', async function () {
     const shareData = {
       title: 'Quick Vibe Check ✨',
-      text: 'Take this 30-second aesthetic vibe check to see your aura & mood score today!',
+      text: 'A quiet 30-second check-in.',
       url: window.location.href
     };
 
@@ -357,24 +295,20 @@
       try {
         await navigator.share(shareData);
         return;
-      } catch (err) {
-        // User cancelled or unsupported, fallback to copy
-      }
+      } catch (err) {}
     }
 
-    // Fallback: Copy to clipboard
     try {
       await navigator.clipboard.writeText(window.location.href);
-      showToast("Link copied! Send it to your next victim 😈");
+      showToast("Link copied to clipboard. Send it to your next victim 😈");
     } catch (e) {
-      // Older browser fallback
-      const tempInput = document.createElement('input');
-      tempInput.value = window.location.href;
-      document.body.appendChild(tempInput);
-      tempInput.select();
+      const temp = document.createElement('input');
+      temp.value = window.location.href;
+      document.body.appendChild(temp);
+      temp.select();
       document.execCommand('copy');
-      document.body.removeChild(tempInput);
-      showToast("Link copied! Send it to your next victim 😈");
+      document.body.removeChild(temp);
+      showToast("Link copied to clipboard. Send it to your next victim 😈");
     }
   });
 
@@ -393,7 +327,7 @@
     }, 2800);
   }
 
-  // --- Initial Render ---
+  // Initialize
   renderStep(0);
 
 })();

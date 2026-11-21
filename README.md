@@ -1,73 +1,33 @@
-# Quick Vibe Check ✨ (Prank Web Application)
+# Quick Vibe Check ✨ (Bespoke Editorial Prank)
 
-A lightweight, mobile-responsive prank web application disguised as an aesthetic mood/vibe assessment quiz, optimized for **GitHub Pages**.
-
----
-
-## 🎯 The Psychology & User Flow
-
-1. **Innocent Aesthetic UI**:
-   - Styled with a soft pastel gradient background, animated ambient blobs, frosted-glass card (`backdrop-filter: blur`), and clean typography.
-   - Branded as `"Quick Vibe Check ✨"` with a 30s mood badge and progress indicator.
-   - Social media previews (Open Graph meta tags) make shared links look 100% genuine and innocent on WhatsApp, iMessage, Instagram, Discord, etc.
-
-2. **The Progressive Shrinking Trap**:
-   - **Question 1**: `"Hey! Quick question... how was your day today? ☀️"`  
-     *Font size:* `22px` (normal, readable, warm dark `#1e293b`).
-   - **Question 2**: `"Nice. What's one random thing that made you smile recently?"`  
-     *Font size:* `14px` (noticeably smaller, muted slate `#64748b`).
-   - **Question 3**: `"Wait, lean in a bit closer... tell me a tiny secret nobody knows:"`  
-     *Font size:* `9px` (tiny, faint gray `#94a3b8`).  
-     *Psychological Effect:* The user naturally brings their phone right up to their face or leans in close to the screen to read the text.
-   - **Mobile Viewport Protection**: The text input field is strictly fixed at `16px` font-size so iOS Safari and Android Chrome will **not** auto-zoom the page viewport when typing.
-
-3. **Instant Zero-Latency Jumpscare**:
-   - As soon as the user presses `Enter` or clicks `Submit ✨`, the quiz card vanishes with `0ms` delay.
-   - The screen flashes and violently shakes with a full-viewport video of **Reze jumping out screaming "Boo!" at Denji** (Chainsaw Man).
-   - Local `scare.mp4` (~360KB) is preloaded with `preload="auto"` and `faststart` metadata for instant playback with 100% audio volume on the user's submit touch gesture.
-   - Triggers mobile haptic vibration (`navigator.vibrate`) with an intense pulsing pattern.
-   - `pointer-events: none` prevents the victim from pausing or scrubbing the video.
-   - Supports background preloaded YouTube IFrame API as a synchronized alternative.
-
-4. **Post-Scare Tease**:
-   - At the end of the scare moment (3.3s), the video pauses.
-   - A floating glassmorphic pill glides up at the bottom:  
-     **"Darr gayi na? 😛"**
-   - Includes a **Replay** button (resets the quiz back to Question 1 with fresh inputs) and a **Share Prank** button (copies the link or opens native mobile share sheet).
+A lightweight, mobile-responsive prank web application disguised as a bespoke, ultra-minimal editorial check-in, hosted on **GitHub Pages**.
 
 ---
 
-## 🚀 How to Deploy on GitHub Pages
+## 🖋 Aesthetic & Visual Direction
 
-1. **Initialize Git & Commit**:
-   ```bash
-   git init
-   git add .
-   git commit -m "feat: Quick Vibe Check prank app"
-   ```
-
-2. **Push to GitHub**:
-   - Create a new public repository on GitHub (e.g., `vibe-check` or `aura-check`).
-   - Link your local repo and push:
-     ```bash
-     git branch -M main
-     git remote add origin https://github.com/<your-username>/<your-repo-name>.git
-     git push -u origin main
-     ```
-
-3. **Enable GitHub Pages**:
-   - Go to your repository on GitHub.
-   - Click on **Settings** → **Pages** (in the left sidebar).
-   - Under **Build and deployment**:
-     - **Source**: `Deploy from a branch`
-     - **Branch**: `main` / `root`
-   - Click **Save**.
-   - Your site will be live at `https://<your-username>.github.io/<your-repo-name>/` in about 60 seconds!
+1. **Stationery & Tactile Paper Texture**:
+   - Warm off-white / cream paper background (`#f6f3ee`) with a soft radial vignette.
+   - An inline SVG `feTurbulence` noise overlay providing fine tactile stationery grain.
+   - Sparse, delicate dusty-rose watercolor & lipstick-tone blush accents around the periphery (12–16% opacity), keeping the center pure and readable.
+2. **Editorial Typography**:
+   - Google Fonts **Playfair Display** (regular & italic) and **Inter**.
+   - Deep ink black (`#141414`) question typography with natural magazine-style italic emphasis.
+3. **Ultra-Minimal Layout**:
+   - Zero generic cards, zero borders, zero badges, zero progress bars.
+   - A single centered question and an elegant underline input field with a minimal `→` submit trigger.
+   - Strictly `16px` input font size to prevent mobile browser auto-zooming.
+4. **The Progressive Shrinking Trap**:
+   - **Step 1**: `26px` deep ink black — inviting and readable.
+   - **Step 2**: `14px` muted ink — noticeably smaller.
+   - **Step 3**: `9px` faint ink — whisper-small, forcing the victim to lean close to the screen.
+5. **Zero-Latency Jumpscare**:
+   - The question space vanishes instantaneously on the 3rd submit.
+   - Fullscreen video of **Reze jumping out screaming "Boo!" at Denji** (Chainsaw Man).
+   - High-volume audio, screen strobe flash, violent shake, and mobile haptic vibration (`navigator.vibrate`).
+   - At 3.3s, pauses to reveal the floating tease pill: **"Darr gayi na? 😛"** with Replay and Share actions.
 
 ---
 
-## ⚙️ Advanced Settings / Query Options
-
-- **Default Mode (Fastest, zero buffer)**: Uses bundled `scare.mp4`.
-- **Force YouTube IFrame Mode**: Append `?source=youtube` to the URL:
-  `https://your-username.github.io/vibe-check/?source=youtube`
+## 🚀 Live Site
+🔗 **https://daiskiii143.github.io/adfjkad/**
