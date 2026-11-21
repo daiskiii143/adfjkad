@@ -199,7 +199,7 @@ html, body {
   transition: opacity 0.3s ease;
 }
 
-/* --- Fullscreen Jumpscare Container --- */
+/* --- Fullscreen Jumpscare Container (Instant 0ms visual snap) --- */
 .scare-container {
   position: fixed;
   inset: 0;
@@ -209,14 +209,18 @@ html, body {
   background: #000000;
   z-index: 9999;
   display: none;
-  opacity: 0;
+  opacity: 1 !important;
+  transition: none !important;
+  animation: none !important;
   pointer-events: none;
   overflow: hidden;
 }
 
 .scare-container.active {
-  display: block;
-  opacity: 1;
+  display: block !important;
+  opacity: 1 !important;
+  transition: none !important;
+  animation: none !important;
 }
 
 /* Video Elements */
@@ -229,6 +233,8 @@ html, body {
   object-fit: cover;
   pointer-events: none;
   background: #000000;
+  transition: none !important;
+  animation: none !important;
 }
 
 /* YouTube Wrapper */

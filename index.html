@@ -59,14 +59,15 @@
 
   <!-- Fullscreen Jumpscare Container -->
   <section id="scareContainer" class="scare-container" aria-hidden="true">
-    <!-- Local HTML5 Video (zero latency, instant sound) -->
+    <!-- Local HTML5 Video (zero latency, pre-warmed decoder) -->
     <video 
       id="scareVideo" 
       class="scare-media" 
       src="scare.mp4" 
       playsinline 
       webkit-playsinline 
-      preload="auto">
+      preload="auto"
+      muted>
     </video>
 
     <!-- YouTube IFrame Fallback -->

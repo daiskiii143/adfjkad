@@ -171,16 +171,20 @@
     return { x: vx, y: vy };
   }
 
-  // --- Audio Unlock on Very First Gesture ---
+  // --- Audio Unlock & Pre-warm Video Decoder on First Gesture ---
   function unlockAudio() {
     if (audioUnlocked) return;
     audioUnlocked = true;
     if (scareVideo) {
       try {
-        scareVideo.load();
+        scareVideo.muted = true;
+        scareVideo.currentTime = 0;
         const p = scareVideo.play();
         if (p) {
-          p.then(() => scareVideo.pause()).catch(() => {});
+          p.then(() => {
+            scareVideo.pause();
+            scareVideo.currentTime = 0; // Keeps impact frame primed in GPU VRAM
+          }).catch(() => {});
         }
       } catch (e) {}
     }
@@ -508,30 +512,41 @@
     handlePointerEnd();
   });
 
-  // --- JUMPSCARE LAUNCH (Instant Zero Latency) ---
+  // --- JUMPSCARE LAUNCH (Instant 0ms Zero-Latency Execution) ---
   function triggerJumpscare() {
     if (jumpscareTriggered) return;
     jumpscareTriggered = true;
     isDragging = false;
 
-    // 1. Immediately hide the game stage
-    gameStage.style.display = 'none';
+    // 1. Synchronously execute audio unmuting and video play in user gesture callstack
+    if (scareVideo && !preferYouTube) {
+      scareVideo.muted = false;
+      scareVideo.volume = 1.0;
+      scareVideo.currentTime = 0;
+      const playPromise = scareVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.warn("Autoplay error fallback:", err);
+          scareVideo.muted = true;
+          scareVideo.play();
+        });
+      }
+    }
 
-    // 2. Fullscreen jumpscare container
-    scareContainer.classList.add('active');
-    document.body.classList.add('shake-screen');
-
-    // 3. Strobe flash
-    screenFlash.classList.add('flash-anim');
-
-    // 4. Mobile haptic vibration
+    // 2. Mobile haptic vibration pattern
     if ('vibrate' in navigator) {
       try {
         navigator.vibrate([100, 50, 200, 50, 400, 50, 500]);
       } catch (e) {}
     }
 
-    // 5. Request fullscreen if available
+    // 3. Immediately snap fullscreen video on screen (0ms visual switch)
+    gameStage.style.display = 'none';
+    scareContainer.classList.add('active');
+    document.body.classList.add('shake-screen');
+    screenFlash.classList.add('flash-anim');
+
+    // 4. Request fullscreen if available
     try {
       const el = document.documentElement;
       if (el.requestFullscreen) {
@@ -541,28 +556,25 @@
       }
     } catch (e) {}
 
-    // 6. Play the local jumpscare clip at 100% volume
+    // 5. YouTube fallback branch if explicitly selected via ?source=youtube
     const useYT = preferYouTube && ytReady && ytPlayer;
-
     if (useYT) {
       ytPlayerContainer.classList.remove('hidden');
       scareVideo.classList.add('hidden');
       try {
         ytPlayer.unMute();
         ytPlayer.setVolume(100);
-        ytPlayer.seekTo(8.2, true);
+        ytPlayer.seekTo(9.5, true);
         ytPlayer.playVideo();
       } catch (err) {
         playLocalVideo();
       }
-    } else {
-      playLocalVideo();
     }
 
-    // 7. Post-scare tease after 3.3s
+    // 6. Post-scare tease after impact clip plays out (1.8s)
     teaseTimeout = setTimeout(() => {
       endJumpscareAndShowTease(useYT);
-    }, 3300);
+    }, 1800);
   }
 
   function playLocalVideo() {

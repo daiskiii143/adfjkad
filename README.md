@@ -30,10 +30,10 @@ A lightweight, mobile-responsive mini-maze game disguised as a cute, bespoke edi
 - **Level 2**: Medium winding path with turns.  
   *Caption:* `"Level 2 — a little narrower now."` (`15px`, muted ink)
 - **Level 3**: Extremely narrow corridor tapering down to `13px`, with caption shrinking to `10px` faint light gray (`"Level 3 — almost there, focus closely..."`) so the player leans right into the screen.
-- **The Jumpscare Trigger**:
-  - In Level 3, when the player gets ~70% through the narrow corridor (or touches a wall in the narrow stretch), the game instantly vanishes.
-  - Full-screen **Reze jumps out screaming "Boo!" at Denji** (`scare.mp4`) with 100% volume, mobile haptic vibration (`navigator.vibrate`), screen flash, and camera shake.
-  - At 3.3s, pauses to reveal the floating tease pill: **"Darr gayi na? 😛"** with a **"Play Again"** button.
+- **The Instant Jumpscare Trigger (Zero-Latency)**:
+  - In Level 3, when the player gets ~70% through the narrow corridor (or touches a wall in the narrow stretch), the game instantly snaps to the jumpscare.
+  - Full-screen **Reze jumps out screaming "Boo!" at Denji** (`scare.mp4`, trimmed directly to the impact frame with 0ms lead-in) with 100% volume, mobile haptic vibration (`navigator.vibrate`), screen flash, and camera shake.
+  - Pauses on the final frame to reveal the floating tease pill: **"Darr gayi na? 😛"** with a **"Play Again"** button.
 
 ---
 
