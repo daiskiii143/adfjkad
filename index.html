@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Quick Vibe Check ✨</title>
+  <title>Steady Hand ✨</title>
   
   <!-- OpenGraph / Social Meta Tags (ultra-innocent preview for WhatsApp, iMessage, etc.) -->
-  <meta property="og:title" content="Quick Vibe Check ✨">
-  <meta property="og:description" content="A quiet 30-second check-in.">
+  <meta property="og:title" content="Steady Hand ✨">
+  <meta property="og:description" content="A cute 30-second focus check. How steady is your hand?">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#f6f3ee">
 
@@ -23,13 +23,13 @@
   <!-- Fine Tactile Paper Grain Texture Overlay (feTurbulence) -->
   <svg class="paper-grain" aria-hidden="true">
     <filter id="paperNoise">
-      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" stitchTiles="stitch" />
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch" />
       <feColorMatrix type="matrix" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.045 0" />
     </filter>
     <rect width="100%" height="100%" filter="url(#paperNoise)" />
   </svg>
 
-  <!-- Sparse Soft Dusty-Rose Watercolor Smudges (12-16% opacity, perimeter only) -->
+  <!-- Sparse Soft Dusty-Rose Watercolor Smudges (Perimeter only) -->
   <div class="watercolor-accents" aria-hidden="true">
     <div class="blush blush-tl"></div>
     <div class="blush blush-br"></div>
@@ -37,37 +37,27 @@
     <div class="blush blush-bl"></div>
   </div>
 
-  <!-- Ultra-Minimal Canvas: ONLY Question & Underline Answer Space -->
-  <main id="quizStage" class="quiz-stage" role="main">
-    <form id="quizForm" onsubmit="return false;" novalidate>
-      <div id="questionContainer" class="question-container">
-        <label for="answerInput" id="questionLabel" class="question-text step-1">
-          Hey. Quick question — how was your <em>day</em> today?
-        </label>
-      </div>
+  <!-- Ultra-Minimal Full-Viewport Game Stage -->
+  <main id="gameStage" class="game-stage" role="main">
+    <!-- Minimal Instruction Caption at Top -->
+    <header class="game-header">
+      <h1 id="levelCaption" class="level-caption step-1">
+        Level 1 — guide the dot to the heart.
+      </h1>
+    </header>
 
-      <div class="input-line-wrapper">
-        <input 
-          type="text" 
-          id="answerInput" 
-          name="answer" 
-          placeholder="write here..." 
-          autocomplete="off" 
-          autocorrect="off" 
-          spellcheck="false" 
-          required
-        >
-        <button type="submit" id="submitBtn" class="arrow-submit" aria-label="Submit">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="4" y1="12" x2="19" y2="12"></line>
-            <polyline points="13 6 19 12 13 18"></polyline>
-          </svg>
-        </button>
-      </div>
-    </form>
+    <!-- Playable Tactile Canvas -->
+    <div class="canvas-wrapper">
+      <canvas id="gameCanvas" width="380" height="500"></canvas>
+    </div>
+
+    <!-- Minimal Subtle Helper Note -->
+    <footer class="game-footer">
+      <p id="helperText" class="helper-text">touch or click and hold the dot to begin</p>
+    </footer>
   </main>
 
-  <!-- Jumpscare Full-Screen Container -->
+  <!-- Fullscreen Jumpscare Container -->
   <section id="scareContainer" class="scare-container" aria-hidden="true">
     <!-- Local HTML5 Video (zero latency, instant sound) -->
     <video 
@@ -79,12 +69,12 @@
       preload="auto">
     </video>
 
-    <!-- YouTube IFrame Container Fallback / Alternative -->
+    <!-- YouTube IFrame Fallback -->
     <div id="ytPlayerContainer" class="scare-media yt-wrapper hidden">
       <div id="ytPlayer"></div>
     </div>
 
-    <!-- Screen Flash / Strobe on scare trigger -->
+    <!-- Screen Flash / Strobe Effect -->
     <div id="screenFlash" class="screen-flash"></div>
   </section>
 
@@ -96,7 +86,7 @@
       </div>
       <div class="tease-actions">
         <button id="replayBtn" class="tease-action-btn" type="button">
-          Replay
+          Play Again
         </button>
         <span class="tease-sep">•</span>
         <button id="shareBtn" class="tease-action-btn primary" type="button">
@@ -111,7 +101,7 @@
 
   <!-- YouTube IFrame API -->
   <script src="https://www.youtube.com/iframe_api"></script>
-  <!-- Application Script -->
+  <!-- Game Application Script -->
   <script src="script.js"></script>
 </body>
 </html>

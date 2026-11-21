@@ -1,31 +1,39 @@
-# Quick Vibe Check ✨ (Bespoke Editorial Prank)
+# Steady Hand ✨ (Mini-Maze Prank Game)
 
-A lightweight, mobile-responsive prank web application disguised as a bespoke, ultra-minimal editorial check-in, hosted on **GitHub Pages**.
+A lightweight, mobile-responsive mini-maze game disguised as a cute, bespoke editorial steady-hand test, hosted on **GitHub Pages**.
 
 ---
 
-## 🖋 Aesthetic & Visual Direction
+## 🖋 Aesthetic & Visual Direction (Zero AI Slop)
 
 1. **Stationery & Tactile Paper Texture**:
-   - Warm off-white / cream paper background (`#f6f3ee`) with a soft radial vignette.
-   - An inline SVG `feTurbulence` noise overlay providing fine tactile stationery grain.
-   - Sparse, delicate dusty-rose watercolor & lipstick-tone blush accents around the periphery (12–16% opacity), keeping the center pure and readable.
+   - Warm off-white / cream paper background (`#f6f3ee`) with a subtle radial vignette.
+   - Inline SVG `feTurbulence` noise overlay providing fine tactile paper grain.
+   - Sparse, soft dusty-rose watercolor accents around the perimeter (12–16% opacity).
 2. **Editorial Typography**:
    - Google Fonts **Playfair Display** (regular & italic) and **Inter**.
-   - Deep ink black (`#141414`) question typography with natural magazine-style italic emphasis.
-3. **Ultra-Minimal Layout**:
-   - Zero generic cards, zero borders, zero badges, zero progress bars.
-   - A single centered question and an elegant underline input field with a minimal `→` submit trigger.
-   - Strictly `16px` input font size to prevent mobile browser auto-zooming.
-4. **The Progressive Shrinking Trap**:
-   - **Step 1**: `26px` deep ink black — inviting and readable.
-   - **Step 2**: `14px` muted ink — noticeably smaller.
-   - **Step 3**: `9px` faint ink — whisper-small, forcing the victim to lean close to the screen.
-5. **Zero-Latency Jumpscare**:
-   - The question space vanishes instantaneously on the 3rd submit.
-   - Fullscreen video of **Reze jumping out screaming "Boo!" at Denji** (Chainsaw Man).
-   - High-volume audio, screen strobe flash, violent shake, and mobile haptic vibration (`navigator.vibrate`).
-   - At 3.3s, pauses to reveal the floating tease pill: **"Darr gayi na? 😛"** with Replay and Share actions.
+   - Minimal single instruction line at the top.
+3. **Ultra-Minimal Full-Viewport Layout**:
+   - Zero cards, zero boxes, zero clutter.
+   - Clean, tactile canvas with `touch-action: none` so mobile touchscreens never scroll, pull-to-refresh, or pinch while playing.
+
+---
+
+## 🎮 Gameplay & Progressive Levels
+
+- **Mechanics**:
+  - Drag the blush-pink dot from the "start" circle to the cute heart without touching the lines.
+  - Supports smooth touch dragging on mobile (`touchstart`, `touchmove`) and mouse dragging on desktop.
+  - Automatically unlocks audio on the player's very first touch/click.
+- **Level 1**: Wide, easy vertical path.  
+  *Caption:* `"Level 1 — guide the dot to the heart."` (`20px`, deep ink)
+- **Level 2**: Medium winding path with turns.  
+  *Caption:* `"Level 2 — a little narrower now."` (`15px`, muted ink)
+- **Level 3**: Extremely narrow corridor tapering down to `13px`, with caption shrinking to `10px` faint light gray (`"Level 3 — almost there, focus closely..."`) so the player leans right into the screen.
+- **The Jumpscare Trigger**:
+  - In Level 3, when the player gets ~70% through the narrow corridor (or touches a wall in the narrow stretch), the game instantly vanishes.
+  - Full-screen **Reze jumps out screaming "Boo!" at Denji** (`scare.mp4`) with 100% volume, mobile haptic vibration (`navigator.vibrate`), screen flash, and camera shake.
+  - At 3.3s, pauses to reveal the floating tease pill: **"Darr gayi na? 😛"** with a **"Play Again"** button.
 
 ---
 
